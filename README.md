@@ -24,7 +24,7 @@ One unexplained reboot of the box happened during a long run without any thermal
 ## Data
 
 * **Common Voice (CV):** 40 clips from [`japanese-asr/ja_asr.common_voice_8_0`](https://huggingface.co/datasets/japanese-asr/ja_asr.common_voice_8_0) (test split), 230 s of audio. Hypotheses are in `raw_cv/`.
-* **Own recordings:** 15 scored clips (two adult Japanese speakers, A and B, reading 10 sentences aloud; recorded through the voice assistant's microphone, not a studio setup); audio and per-clip outputs are **not published**, only aggregate CER. The sentences (reconstructed from the recordings, one is a variant read by speaker B):
+* **Own recordings:** 15 scored clips (two adult Japanese speakers, A and B, reading 10 sentences aloud; recorded through the voice assistant's microphone, not a studio setup); audio and per-clip outputs are **not published**, only aggregate CER. The sentences (reconstructed from the recordings):
   1. 今日は朝から忙しくて、まだお昼ご飯を食べていません。 2. 公園まで散歩に行く予定です。 3. 冷蔵庫に牛乳が残っているか、後で確認しておいてください。 4. 新しい本を買ったので、夜にゆっくり読もうと思っています。 5. 駅までは歩いて十分くらいかかります。 6. すみません、もう一度ゆっくり説明してもらえますか。 7. 明日の会議の資料はもう準備できましたか。 8. この前行ったお店はとても美味しかったです。 9. 洗濯物を取り込んでから買い物に行きます。 10. ありがとう、また後でお願いします。
 * **Noise:** synthetic, see `tools/make_sets.py`. `pinkN` = pink (1/f) noise at N dB SNR; `babbleN` = three other speech clips summed at N dB SNR. `+gain` means the same per-segment auto-gain that the real-time pipeline applies (target RMS 3000, max 30x) was applied first; the recordings are quiet, and the sherpa-onnx models are sensitive to level (the Hugging Face CTC models appear to normalise input themselves).
 
