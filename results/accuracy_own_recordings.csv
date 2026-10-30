@@ -1,0 +1,93 @@
+model,condition,cer_percent
+reazonspeech-k2-v2 int8 (sherpa-onnx),as_recorded,6.2
+reazonspeech-k2-v2 int8 (sherpa-onnx),clean+gain,5.1
+reazonspeech-k2-v2 int8 (sherpa-onnx),pink10,8.2
+reazonspeech-k2-v2 int8 (sherpa-onnx),pink10+gain,9.7
+reazonspeech-k2-v2 int8 (sherpa-onnx),pink5,10.8
+reazonspeech-k2-v2 int8 (sherpa-onnx),pink5+gain,12.8
+reazonspeech-k2-v2 int8 (sherpa-onnx),pink0,19.7
+reazonspeech-k2-v2 int8 (sherpa-onnx),pink0+gain,19.5
+reazonspeech-k2-v2 int8 (sherpa-onnx),babble10,20.8
+reazonspeech-k2-v2 int8 (sherpa-onnx),babble10+gain,26.2
+reazonspeech-k2-v2 int8 (sherpa-onnx),babble5,43.1
+reazonspeech-k2-v2 int8 (sherpa-onnx),babble5+gain,43.3
+reazonspeech-k2-v2 int8 (sherpa-onnx),babble0,91.0
+reazonspeech-k2-v2 int8 (sherpa-onnx),babble0+gain,88.2
+reazonspeech-k2-v2 fp32 (sherpa-onnx),as_recorded,3.6
+reazonspeech-k2-v2 fp32 (sherpa-onnx),clean+gain,5.1
+reazonspeech-k2-v2 fp32 (sherpa-onnx),pink10,6.9
+reazonspeech-k2-v2 fp32 (sherpa-onnx),pink10+gain,8.2
+reazonspeech-k2-v2 fp32 (sherpa-onnx),pink5,9.5
+reazonspeech-k2-v2 fp32 (sherpa-onnx),pink5+gain,10.3
+reazonspeech-k2-v2 fp32 (sherpa-onnx),pink0,19.5
+reazonspeech-k2-v2 fp32 (sherpa-onnx),pink0+gain,17.7
+reazonspeech-k2-v2 fp32 (sherpa-onnx),babble10,15.6
+reazonspeech-k2-v2 fp32 (sherpa-onnx),babble10+gain,25.9
+reazonspeech-k2-v2 fp32 (sherpa-onnx),babble5,37.9
+reazonspeech-k2-v2 fp32 (sherpa-onnx),babble5+gain,38.5
+reazonspeech-k2-v2 fp32 (sherpa-onnx),babble0,89.7
+reazonspeech-k2-v2 fp32 (sherpa-onnx),babble0+gain,89.7
+japanese-zipformer-base-k2-rs35kh,as_recorded,6.7
+japanese-zipformer-base-k2-rs35kh,clean+gain,7.2
+japanese-zipformer-base-k2-rs35kh,pink10,13.3
+japanese-zipformer-base-k2-rs35kh,pink10+gain,13.6
+japanese-zipformer-base-k2-rs35kh,pink5,19.2
+japanese-zipformer-base-k2-rs35kh,pink5+gain,19.2
+japanese-zipformer-base-k2-rs35kh,pink0,30.8
+japanese-zipformer-base-k2-rs35kh,pink0+gain,31.0
+japanese-zipformer-base-k2-rs35kh,babble10,24.6
+japanese-zipformer-base-k2-rs35kh,babble10+gain,24.9
+japanese-zipformer-base-k2-rs35kh,babble5,49.7
+japanese-zipformer-base-k2-rs35kh,babble5+gain,49.5
+japanese-zipformer-base-k2-rs35kh,babble0,73.3
+japanese-zipformer-base-k2-rs35kh,babble0+gain,73.3
+japanese-zipformer-base-k2-rs35kh-bpe,as_recorded,4.9
+japanese-zipformer-base-k2-rs35kh-bpe,clean+gain,4.9
+japanese-zipformer-base-k2-rs35kh-bpe,pink10,11.5
+japanese-zipformer-base-k2-rs35kh-bpe,pink10+gain,10.5
+japanese-zipformer-base-k2-rs35kh-bpe,pink5,17.2
+japanese-zipformer-base-k2-rs35kh-bpe,pink5+gain,18.2
+japanese-zipformer-base-k2-rs35kh-bpe,pink0,38.5
+japanese-zipformer-base-k2-rs35kh-bpe,pink0+gain,38.5
+japanese-zipformer-base-k2-rs35kh-bpe,babble10,23.6
+japanese-zipformer-base-k2-rs35kh-bpe,babble10+gain,23.6
+japanese-zipformer-base-k2-rs35kh-bpe,babble5,50.0
+japanese-zipformer-base-k2-rs35kh-bpe,babble5+gain,49.0
+japanese-zipformer-base-k2-rs35kh-bpe,babble0,75.4
+japanese-zipformer-base-k2-rs35kh-bpe,babble0+gain,75.1
+japanese-hubert-base-k2-rs35kh,as_recorded,6.7
+japanese-hubert-base-k2-rs35kh,clean+gain,6.7
+japanese-hubert-base-k2-rs35kh,pink10,10.3
+japanese-hubert-base-k2-rs35kh,pink10+gain,10.3
+japanese-hubert-base-k2-rs35kh,pink5,14.4
+japanese-hubert-base-k2-rs35kh,pink5+gain,14.4
+japanese-hubert-base-k2-rs35kh,pink0,22.3
+japanese-hubert-base-k2-rs35kh,pink0+gain,22.3
+japanese-hubert-base-k2-rs35kh,babble10,15.4
+japanese-hubert-base-k2-rs35kh,babble10+gain,15.4
+japanese-hubert-base-k2-rs35kh,babble5,37.9
+japanese-hubert-base-k2-rs35kh,babble5+gain,37.7
+japanese-hubert-base-k2-rs35kh,babble0,70.3
+japanese-hubert-base-k2-rs35kh,babble0+gain,70.3
+japanese-hubert-base-k2-rs35kh-bpe,as_recorded,7.9
+japanese-hubert-base-k2-rs35kh-bpe,clean+gain,7.9
+japanese-hubert-base-k2-rs35kh-bpe,pink10,11.5
+japanese-hubert-base-k2-rs35kh-bpe,pink10+gain,11.5
+japanese-hubert-base-k2-rs35kh-bpe,pink5,13.3
+japanese-hubert-base-k2-rs35kh-bpe,pink5+gain,13.3
+japanese-hubert-base-k2-rs35kh-bpe,pink0,27.2
+japanese-hubert-base-k2-rs35kh-bpe,pink0+gain,27.2
+japanese-hubert-base-k2-rs35kh-bpe,babble10,21.3
+japanese-hubert-base-k2-rs35kh-bpe,babble10+gain,21.3
+japanese-hubert-base-k2-rs35kh-bpe,babble5,36.9
+japanese-hubert-base-k2-rs35kh-bpe,babble5+gain,36.9
+japanese-hubert-base-k2-rs35kh-bpe,babble0,70.8
+japanese-hubert-base-k2-rs35kh-bpe,babble0+gain,70.8
+reazonspeech-nemo-v2 Q8_0 (speech.cpp),clean+gain,11.3
+reazonspeech-nemo-v2 Q8_0 (speech.cpp),pink5,16.9
+reazonspeech-nemo-v2 Q8_0 (speech.cpp),babble10,18.7
+reazonspeech-nemo-v2 Q8_0 (speech.cpp),babble5,42.3
+parakeet-tdt_ctc-0.6b-ja Q8_0 (speech.cpp),clean+gain,2.3
+parakeet-tdt_ctc-0.6b-ja Q8_0 (speech.cpp),pink5,5.4
+parakeet-tdt_ctc-0.6b-ja Q8_0 (speech.cpp),babble10,4.6
+parakeet-tdt_ctc-0.6b-ja Q8_0 (speech.cpp),babble5,16.4

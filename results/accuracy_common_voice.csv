@@ -1,0 +1,48 @@
+model,condition,cer_percent
+reazonspeech-k2-v2 int8 (sherpa-onnx),clean,4.9
+reazonspeech-k2-v2 int8 (sherpa-onnx),pink10,5.3
+reazonspeech-k2-v2 int8 (sherpa-onnx),babble10,6.0
+reazonspeech-k2-v2 int8 (sherpa-onnx),pink5,7.1
+reazonspeech-k2-v2 int8 (sherpa-onnx),babble5,18.4
+reazonspeech-k2-v2 int8 (sherpa-onnx),pink0,11.9
+reazonspeech-k2-v2 int8 (sherpa-onnx),babble0,39.0
+reazonspeech-k2-v2 fp32 (sherpa-onnx),clean,4.8
+reazonspeech-k2-v2 fp32 (sherpa-onnx),pink10,5.3
+reazonspeech-k2-v2 fp32 (sherpa-onnx),babble10,7.2
+reazonspeech-k2-v2 fp32 (sherpa-onnx),pink5,6.6
+reazonspeech-k2-v2 fp32 (sherpa-onnx),babble5,16.7
+reazonspeech-k2-v2 fp32 (sherpa-onnx),pink0,10.5
+reazonspeech-k2-v2 fp32 (sherpa-onnx),babble0,36.5
+japanese-zipformer-base-k2-rs35kh,clean,7.7
+japanese-zipformer-base-k2-rs35kh,pink10,12.1
+japanese-zipformer-base-k2-rs35kh,babble10,14.6
+japanese-zipformer-base-k2-rs35kh,pink5,15.0
+japanese-zipformer-base-k2-rs35kh,babble5,25.3
+japanese-zipformer-base-k2-rs35kh,pink0,21.6
+japanese-zipformer-base-k2-rs35kh,babble0,49.6
+japanese-zipformer-base-k2-rs35kh-bpe,clean,8.3
+japanese-zipformer-base-k2-rs35kh-bpe,pink10,13.2
+japanese-zipformer-base-k2-rs35kh-bpe,babble10,15.2
+japanese-zipformer-base-k2-rs35kh-bpe,pink5,17.0
+japanese-zipformer-base-k2-rs35kh-bpe,babble5,28.5
+japanese-zipformer-base-k2-rs35kh-bpe,pink0,24.5
+japanese-zipformer-base-k2-rs35kh-bpe,babble0,50.0
+japanese-hubert-base-k2-rs35kh,clean,6.8
+japanese-hubert-base-k2-rs35kh,pink10,7.9
+japanese-hubert-base-k2-rs35kh,babble10,10.9
+japanese-hubert-base-k2-rs35kh,pink5,10.8
+japanese-hubert-base-k2-rs35kh,babble5,20.4
+japanese-hubert-base-k2-rs35kh,pink0,16.0
+japanese-hubert-base-k2-rs35kh,babble0,46.1
+japanese-hubert-base-k2-rs35kh-bpe,clean,7.0
+japanese-hubert-base-k2-rs35kh-bpe,pink10,9.1
+japanese-hubert-base-k2-rs35kh-bpe,babble10,13.6
+japanese-hubert-base-k2-rs35kh-bpe,pink5,13.6
+japanese-hubert-base-k2-rs35kh-bpe,babble5,22.3
+japanese-hubert-base-k2-rs35kh-bpe,pink0,20.5
+japanese-hubert-base-k2-rs35kh-bpe,babble0,48.6
+reazonspeech-nemo-v2 Q8_0 (speech.cpp),clean,3.8
+reazonspeech-nemo-v2 Q8_0 (speech.cpp),pink5,8.4
+reazonspeech-nemo-v2 Q8_0 (speech.cpp),babble5,25.8
+parakeet-tdt_ctc-0.6b-ja Q8_0 (speech.cpp),pink5,6.9
+parakeet-tdt_ctc-0.6b-ja Q8_0 (speech.cpp),babble5,17.1

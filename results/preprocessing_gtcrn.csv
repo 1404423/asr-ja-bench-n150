@@ -1,0 +1,25 @@
+engine,condition,preprocessing,cer_percent,rtf_including_preprocessing
+"k2-v2 fp32, 1 thread, cpus=2",own_clean+gain,none,5.1,0.17
+"k2-v2 fp32, 1 thread, cpus=2",own_clean+gain,GTCRN,3.6,0.23
+"k2-v2 fp32, 1 thread, cpus=2",own_clean+gain,GTCRN+original 50/50,3.6,0.21
+"k2-v2 fp32, 1 thread, cpus=2",own_pink5,none,9.5,0.14
+"k2-v2 fp32, 1 thread, cpus=2",own_pink5,GTCRN,17.2,0.21
+"k2-v2 fp32, 1 thread, cpus=2",own_pink5,GTCRN+original 50/50,8.5,0.21
+"k2-v2 fp32, 1 thread, cpus=2",own_pink0,none,19.5,0.14
+"k2-v2 fp32, 1 thread, cpus=2",own_pink0,GTCRN,28.5,0.21
+"k2-v2 fp32, 1 thread, cpus=2",own_pink0,GTCRN+original 50/50,22.6,0.21
+"k2-v2 fp32, 1 thread, cpus=2",own_babble10,none,15.6,0.14
+"k2-v2 fp32, 1 thread, cpus=2",own_babble10,GTCRN,17.4,0.21
+"k2-v2 fp32, 1 thread, cpus=2",own_babble10,GTCRN+original 50/50,16.4,0.21
+"k2-v2 fp32, 1 thread, cpus=2",own_babble5,none,37.9,0.14
+"k2-v2 fp32, 1 thread, cpus=2",own_babble5,GTCRN,37.4,0.21
+"k2-v2 fp32, 1 thread, cpus=2",own_babble5,GTCRN+original 50/50,36.9,0.21
+"k2-v2 fp32, 1 thread, cpus=2",pink5,none,6.6,0.14
+"k2-v2 fp32, 1 thread, cpus=2",pink5,GTCRN,8.9,0.22
+"k2-v2 fp32, 1 thread, cpus=2",pink5,GTCRN+original 50/50,6.8,0.22
+"k2-v2 fp32, 1 thread, cpus=2",babble5,none,16.7,0.14
+"k2-v2 fp32, 1 thread, cpus=2",babble5,GTCRN,18.2,0.21
+"k2-v2 fp32, 1 thread, cpus=2",babble5,GTCRN+original 50/50,17.5,0.21
+"k2-v2 fp32, 1 thread, cpus=2",clean,none,4.8,0.14
+"k2-v2 fp32, 1 thread, cpus=2",clean,GTCRN,5.2,0.21
+"k2-v2 fp32, 1 thread, cpus=2",clean,GTCRN+original 50/50,4.6,0.21
