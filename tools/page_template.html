@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Japanese ASR on N150</title>
+<style>
+:root{--bg:#fafaf8;--panel:#fff;--text:#1d2125;--muted:#5d6670;--line:#dcdfe3;--accent:#0b5cad}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15181b;--panel:#1d2126;--text:#e6e8ea;--muted:#9aa4ad;--line:#333a41;--accent:#6aa9ee}}
+:root[data-theme="dark"]{--bg:#15181b;--panel:#1d2126;--text:#e6e8ea;--muted:#9aa4ad;--line:#333a41;--accent:#6aa9ee}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.55 system-ui,-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif}
+main{max-width:980px;margin:0 auto;padding:20px 16px 48px}
+h1{font-size:1.35rem;margin:0 0 4px}
+p.lead{color:var(--muted);margin:0 0 16px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.tabs button{border:1px solid var(--line);background:var(--panel);color:var(--text);padding:7px 13px;border-radius:8px;cursor:pointer;font:inherit}
+.tabs button[aria-selected="true"]{border-color:var(--accent);color:var(--accent);font-weight:600}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:14px}
+.row{display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start;margin-bottom:10px}
+.grp{min-width:0}
+.grp>b{display:block;font-size:.8rem;color:var(--muted);margin-bottom:4px;font-weight:600}
+label{display:inline-flex;align-items:center;gap:6px;margin:2px 12px 2px 0;cursor:pointer}
+.sw{width:11px;height:11px;border-radius:3px;display:inline-block}
+.chartbox{position:relative;height:380px}
+table{border-collapse:collapse;width:100%;font-size:.85rem;font-variant-numeric:tabular-nums}
+th,td{padding:5px 8px;border-bottom:1px solid var(--line);text-align:right}
+th:first-child,td:first-child{text-align:left}
+th{color:var(--muted);font-weight:600}
+.note{color:var(--muted);font-size:.82rem;margin:8px 0 0}
+.tbl{overflow-x:auto}
+footer{color:var(--muted);font-size:.8rem}
+a{color:var(--accent)}
+.hide{display:none}
+</style>
+</head>
+<body>
+<main>
+<h1>Japanese ASR on Intel N150 / 日本語ASR比較</h1>
+<p class="lead">CER(誤り率、低いほど良い)と RTF(処理時間÷音声長、低いほど速い)。見たいモデルと条件だけ選べます。 Lower is better for both.</p>
+
+<div class="tabs" role="tablist">
+  <button role="tab" aria-selected="true" data-tab="noise">ノイズ別の精度 / Accuracy vs noise</button>
+  <button role="tab" aria-selected="false" data-tab="speed">速度と精度 / Speed vs accuracy</button>
+  <button role="tab" aria-selected="false" data-tab="pre">前処理 / Preprocessing</button>
+</div>
+
+<section id="tab-noise" class="card">
+  <div class="row">
+    <div class="grp"><b>データ / Data</b>
+      <label><input type="radio" name="ds" value="cv" checked> 公開サンプル (Common Voice 40)</label>
+      <label><input type="radio" name="ds" value="own"> 自分たちの録音 (15)</label></div>
+    <div class="grp"><b>ノイズ / Noise</b>
+      <label><input type="radio" name="nz" value="pink" checked> ピンクノイズ</label>
+      <label><input type="radio" name="nz" value="babble"> 会話ノイズ</label></div>
+  </div>
+  <div class="grp"><b>モデル / Models</b><div id="models-noise"></div></div>
+  <div class="chartbox"><canvas id="c-noise" role="img" aria-label="CER by noise level"></canvas></div>
+  <p class="note" id="note-noise"></p>
+  <div class="tbl"><table id="t-noise"></table></div>
+</section>
+
+<section id="tab-speed" class="card hide">
+  <div class="row">
+    <div class="grp"><b>条件 / Condition</b><select id="sp-cond"></select></div>
+  </div>
+  <div class="grp"><b>モデル / Models</b><div id="models-speed"></div></div>
+  <div class="chartbox"><canvas id="c-speed" role="img" aria-label="CER versus RTF"></canvas></div>
+  <p class="note">左下が「速くて正確」。点の上にカーソル(またはタップ)でスレッド数とコンテナのCPU上限が出ます。コンテナのCPU上限が揃っていない行があります(<code>--cpus</code> を表示)。</p>
+  <div class="tbl"><table id="t-speed"></table></div>
+</section>
+
+<section id="tab-pre" class="card hide">
+  <div class="row"><div class="grp"><b>条件 / Condition</b>
+    <label><input type="radio" name="pd" value="cv" checked> 公開サンプル</label>
+    <label><input type="radio" name="pd" value="own"> 自分たちの録音</label></div></div>
+  <div class="chartbox"><canvas id="c-pre" role="img" aria-label="CER with and without preprocessing"></canvas></div>
+  <p class="note">k2-v2 fp32(1スレッド)。GTCRN はノイズ抑制、mix は原音と50%ずつ混ぜたもの。ほとんどの条件で効果なし、またはノイズ時に悪化。</p>
+</section>
+
+<footer>
+  <p>データ: <code>results/*.csv</code>。録音は2人・15文の少数で、参考値です。音声は公開していません。
+  Numbers are from one machine (Intel N150, CPU only); see the README for conditions and caveats.</p>
+</footer>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+const DATA = /*DATA*/null;
+
+function short(m){
+  if(/k2-v2 int8/.test(m)) return "k2-v2 int8";
+  if(/k2-v2 fp32/.test(m)) return "k2-v2 fp32";
+  if(/zipformer.*bpe/.test(m)) return "Zipformer rs35kh-bpe";
+  if(/zipformer/.test(m)) return "Zipformer rs35kh";
+  if(/hubert.*bpe/.test(m)) return "HuBERT rs35kh-bpe";
+  if(/hubert/.test(m)) return "HuBERT rs35kh";
+  if(/nemo/.test(m)) return "NeMo v2 Q8_0";
+  if(/parakeet/i.test(m)) return "Parakeet-ja Q8_0";
+  return m;
+}
+const ORDER=["k2-v2 int8","k2-v2 fp32","Parakeet-ja Q8_0","NeMo v2 Q8_0","Zipformer rs35kh","Zipformer rs35kh-bpe","HuBERT rs35kh","HuBERT rs35kh-bpe"];
+const COLORS={"k2-v2 int8":"#56B4E9","k2-v2 fp32":"#0072B2","Parakeet-ja Q8_0":"#009E73","NeMo v2 Q8_0":"#CC79A7","Zipformer rs35kh":"#E69F00","Zipformer rs35kh-bpe":"#D55E00","HuBERT rs35kh":"#999999","HuBERT rs35kh-bpe":"#7A5195"};
+const SHAPES={"k2-v2 int8":"triangle","k2-v2 fp32":"circle","Parakeet-ja Q8_0":"rectRot","NeMo v2 Q8_0":"rect","Zipformer rs35kh":"star","Zipformer rs35kh-bpe":"cross","HuBERT rs35kh":"crossRot","HuBERT rs35kh-bpe":"triangle"};
+
+const $ = (s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+function css(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim()}
+let store={}; try{store=JSON.parse(localStorage.getItem("asr-ui")||"{}")}catch(e){}
+function save(){try{localStorage.setItem("asr-ui",JSON.stringify(store))}catch(e){}}
+
+function modelBoxes(el,names,key,onchange){
+  const sel=new Set(store[key]||names);
+  el.innerHTML=names.map(n=>`<label><input type="checkbox" value="${n}" ${sel.has(n)?"checked":""}><span class="sw" style="background:${COLORS[n]}"></span>${n}</label>`).join("");
+  $$("input",el).forEach(i=>i.onchange=()=>{store[key]=$$("input:checked",el).map(x=>x.value);save();onchange()});
+}
+const picked=el=>$$("input:checked",el).map(i=>i.value);
+
+/* ---------- tab 1: accuracy vs noise ---------- */
+let chN;
+function lookup(ds){
+  const rows=ds==="cv"?DATA.cv:DATA.own, m={};
+  for(const [mod,cond,v] of rows){(m[short(mod)]??={})[cond]=v}
+  return m;
+}
+function drawNoise(){
+  const ds=$("input[name=ds]:checked").value, nz=$("input[name=nz]:checked").value;
+  const cleanKey=ds==="cv"?"clean":"clean+gain";
+  const xs=[["静か / clean",cleanKey],["10 dB",nz+"10"],["5 dB",nz+"5"],["0 dB",nz+"0"]];
+  const L=lookup(ds), names=picked($("#models-noise"));
+  const sets=names.map(n=>({label:n,data:xs.map(([,k])=>L[n]?.[k]??null),borderColor:COLORS[n],backgroundColor:COLORS[n],pointStyle:SHAPES[n],pointRadius:5,borderWidth:2,spanGaps:true,tension:.15}));
+  const o=chartOpts("CER %");
+  o.scales.x.title={display:true,text:"SNR(右ほどノイズ大)",color:css("--muted")};
+  if(chN)chN.destroy();
+  chN=new Chart($("#c-noise"),{type:"line",data:{labels:xs.map(x=>x[0]),datasets:sets},options:o});
+  $("#t-noise").innerHTML="<tr><th>model</th>"+xs.map(x=>`<th>${x[0]}</th>`).join("")+"</tr>"+
+    names.map(n=>`<tr><td><span class="sw" style="background:${COLORS[n]}"></span> ${n}</td>`+xs.map(([,k])=>`<td>${L[n]?.[k]??"–"}</td>`).join("")+"</tr>").join("");
+  $("#note-noise").textContent=(ds==="own"
+    ?"録音はノイズ無しの点のみ自動ゲイン後(clean+gain)、ノイズ条件は録音レベルのまま混合。2人・15文のため参考値。"
+    :"公開サンプルは Common Voice(日本語、40件、約230秒)。")+" 未測定は–(線は測定点をつなぎます)。";
+}
+
+/* ---------- tab 2: speed vs accuracy ---------- */
+let chS;
+function drawSpeed(){
+  const cond=$("#sp-cond").value, names=picked($("#models-speed"));
+  const rows=DATA.speed.filter(r=>!r.p&&r.c===cond&&names.includes(short(r.m)));
+  const by={};
+  rows.forEach(r=>(by[short(r.m)]??=[]).push(r));
+  const sets=Object.entries(by).map(([n,rs])=>({label:n,data:rs.map(r=>({x:r.rtf,y:r.cer,r})),borderColor:COLORS[n],backgroundColor:COLORS[n],pointStyle:SHAPES[n],pointRadius:7,pointHoverRadius:9,showLine:false}));
+  const o=chartOpts("CER %");
+  o.scales.x={type:"linear",min:0,title:{display:true,text:"RTF(左ほど速い)",color:css("--muted")},ticks:{color:css("--muted")},grid:{color:css("--line")}};
+  o.plugins.tooltip={callbacks:{label:c=>{const r=c.raw.r;return `${c.dataset.label}: CER ${r.cer}% / RTF ${r.rtf} (${r.t}, ${r.cap})`}}};
+  if(chS)chS.destroy();
+  chS=new Chart($("#c-speed"),{type:"scatter",data:{datasets:sets},options:o});
+  $("#t-speed").innerHTML="<tr><th>model</th><th>threads</th><th>cap</th><th>CER %</th><th>RTF</th></tr>"+
+    rows.sort((a,b)=>a.rtf-b.rtf).map(r=>`<tr><td>${short(r.m)}</td><td>${r.t.replace("threads=","")}</td><td>${r.cap.replace("cpus=","")}</td><td>${r.cer}</td><td>${r.rtf}</td></tr>`).join("");
+}
+
+/* ---------- tab 3: preprocessing ---------- */
+let chP;
+function drawPre(){
+  const ds=$("input[name=pd]:checked").value;
+  const keep=ds==="cv"?["clean","pink5","babble5"]:["own_clean+gain","own_pink5","own_pink0","own_babble10","own_babble5"];
+  const pretty=c=>c.replace("own_","").replace("pink","ピンク ").replace("babble","会話 ").replace("clean","静か")+(/\d/.test(c)?" dB":"");
+  const modes=[["none","処理なし","#6c8ebf"],["GTCRN","GTCRN","#d9822b"],["GTCRN+original 50/50","GTCRN+原音50%","#4aa37a"]];
+  const sets=modes.map(([k,l,c])=>({label:l,backgroundColor:c,data:keep.map(cd=>DATA.pre.find(r=>r.c===cd&&r.p===k)?.cer??null)}));
+  const o=chartOpts("CER %");
+  if(chP)chP.destroy();
+  chP=new Chart($("#c-pre"),{type:"bar",data:{labels:keep.map(pretty),datasets:sets},options:o});
+}
+
+function chartOpts(ytitle){
+  const muted=css("--muted"),line=css("--line"),text=css("--text");
+  return {responsive:true,maintainAspectRatio:false,interaction:{mode:"nearest",intersect:false},
+    plugins:{legend:{labels:{color:text,usePointStyle:true}}},
+    scales:{x:{ticks:{color:muted},grid:{color:line}},y:{beginAtZero:true,title:{display:true,text:ytitle,color:muted},ticks:{color:muted},grid:{color:line}}}};
+}
+
+/* ---------- wiring ---------- */
+const present=new Set([...DATA.cv.map(r=>short(r[0])),...DATA.own.map(r=>short(r[0]))]);
+const names=ORDER.filter(n=>present.has(n));
+modelBoxes($("#models-noise"),names,"mn",drawNoise);
+$$("input[name=ds],input[name=nz]").forEach(i=>i.onchange=drawNoise);
+const spNames=ORDER.filter(n=>DATA.speed.some(r=>short(r.m)===n));
+modelBoxes($("#models-speed"),spNames,"ms",drawSpeed);
+const cnt={}; DATA.speed.filter(r=>!r.p).forEach(r=>cnt[r.c]=(cnt[r.c]||0)+1);
+const conds=Object.keys(cnt).sort((a,b)=>cnt[b]-cnt[a]);
+$("#sp-cond").innerHTML=conds.map(c=>`<option value="${c}">${c}</option>`).join("");
+$("#sp-cond").onchange=drawSpeed;
+$$("input[name=pd]").forEach(i=>i.onchange=drawPre);
+
+const draw={noise:drawNoise,speed:drawSpeed,pre:drawPre};
+function show(t){
+  $$(".tabs button").forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===t));
+  for(const k of Object.keys(draw)) $("#tab-"+k).classList.toggle("hide",k!==t);
+  draw[t](); store.tab=t; save();
+}
+$$(".tabs button").forEach(b=>b.onclick=()=>show(b.dataset.tab));
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change",()=>show(store.tab||"noise"));
+show(draw[store.tab]?store.tab:"noise");
+</script>
+</body>
+</html>

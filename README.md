@@ -92,9 +92,13 @@ One unexplained reboot of the box happened during a long run without any thermal
 * Container core limits differ between some runs (listed in the CSV).
 * GGUF conversions are community builds: [`sakasegawa/reazonspeech-nemo-v2-GGUF`](https://huggingface.co/sakasegawa/reazonspeech-nemo-v2-GGUF), [`sakasegawa/parakeet-tdt_ctc-0.6b-ja-GGUF`](https://huggingface.co/sakasegawa/parakeet-tdt_ctc-0.6b-ja-GGUF).
 
+## Interactive view
+
+`docs/index.html` is a single static page (Chart.js from a CDN, data embedded): pick models and conditions, compare accuracy vs noise, speed vs accuracy, and preprocessing. Open it locally (`python3 -m http.server -d docs`) or serve `docs/` with GitHub Pages. Rebuild with `python3 tools/build_page.py` after editing the CSVs.
+
 ## Layout
 
-* `results/*.csv` – all numbers · `raw_cv/` – CV references and hypotheses · `tools/` – scripts as used (paths are those of the test container).
+* `results/*.csv` – all numbers · `raw_cv/` – CV references and hypotheses · `docs/index.html` – interactive charts · `tools/` – scripts as used (paths are those of the test container).
 
 ## License
 
