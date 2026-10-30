@@ -96,12 +96,14 @@ function short(m){
   if(/hubert.*bpe/.test(m)) return "HuBERT rs35kh-bpe";
   if(/hubert/.test(m)) return "HuBERT rs35kh";
   if(/nemo/.test(m)) return "NeMo v2 Q8_0";
+  if(/parakeet.*F16/i.test(m)) return "Parakeet-ja F16";
+  if(/parakeet.*Q5_K/i.test(m)) return "Parakeet-ja Q5_K";
   if(/parakeet/i.test(m)) return "Parakeet-ja Q8_0";
   return m;
 }
-const ORDER=["k2-v2 int8","k2-v2 fp32","Parakeet-ja Q8_0","NeMo v2 Q8_0","Zipformer rs35kh","Zipformer rs35kh-bpe","HuBERT rs35kh","HuBERT rs35kh-bpe"];
-const COLORS={"k2-v2 int8":"#56B4E9","k2-v2 fp32":"#0072B2","Parakeet-ja Q8_0":"#009E73","NeMo v2 Q8_0":"#CC79A7","Zipformer rs35kh":"#E69F00","Zipformer rs35kh-bpe":"#D55E00","HuBERT rs35kh":"#999999","HuBERT rs35kh-bpe":"#7A5195"};
-const SHAPES={"k2-v2 int8":"triangle","k2-v2 fp32":"circle","Parakeet-ja Q8_0":"rectRot","NeMo v2 Q8_0":"rect","Zipformer rs35kh":"star","Zipformer rs35kh-bpe":"cross","HuBERT rs35kh":"crossRot","HuBERT rs35kh-bpe":"triangle"};
+const ORDER=["k2-v2 int8","k2-v2 fp32","Parakeet-ja Q8_0","Parakeet-ja Q5_K","Parakeet-ja F16","NeMo v2 Q8_0","Zipformer rs35kh","Zipformer rs35kh-bpe","HuBERT rs35kh","HuBERT rs35kh-bpe"];
+const COLORS={"k2-v2 int8":"#56B4E9","k2-v2 fp32":"#0072B2","Parakeet-ja Q8_0":"#009E73","Parakeet-ja Q5_K":"#7FD1B0","Parakeet-ja F16":"#00664A","NeMo v2 Q8_0":"#CC79A7","Zipformer rs35kh":"#E69F00","Zipformer rs35kh-bpe":"#D55E00","HuBERT rs35kh":"#999999","HuBERT rs35kh-bpe":"#7A5195"};
+const SHAPES={"k2-v2 int8":"triangle","k2-v2 fp32":"circle","Parakeet-ja Q8_0":"rectRot","Parakeet-ja Q5_K":"circle","Parakeet-ja F16":"triangle","NeMo v2 Q8_0":"rect","Zipformer rs35kh":"star","Zipformer rs35kh-bpe":"cross","HuBERT rs35kh":"crossRot","HuBERT rs35kh-bpe":"triangle"};
 
 const $ = (s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
 function css(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim()}

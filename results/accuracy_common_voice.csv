@@ -46,3 +46,10 @@ reazonspeech-nemo-v2 Q8_0 (speech.cpp),pink5,8.4
 reazonspeech-nemo-v2 Q8_0 (speech.cpp),babble5,25.8
 parakeet-tdt_ctc-0.6b-ja Q8_0 (speech.cpp),pink5,6.9
 parakeet-tdt_ctc-0.6b-ja Q8_0 (speech.cpp),babble5,17.1
+parakeet-tdt_ctc-0.6b-ja Q8_0 (speech.cpp),clean,3.1
+parakeet-tdt_ctc-0.6b-ja Q8_0 (speech.cpp),pink10,3.6
+parakeet-tdt_ctc-0.6b-ja Q8_0 (speech.cpp),pink0,8.9
+parakeet-tdt_ctc-0.6b-ja Q8_0 (speech.cpp),babble10,7.2
+parakeet-tdt_ctc-0.6b-ja Q8_0 (speech.cpp),babble0,40.7
+parakeet-tdt_ctc-0.6b-ja F16 (speech.cpp),pink5,6.7
+parakeet-tdt_ctc-0.6b-ja Q5_K (speech.cpp),pink5,6.4
