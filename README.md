@@ -1,3 +1,5 @@
+[Interactive charts / グラフで見る](https://1404423.github.io/asr-ja-bench-n150/)
+
 # Japanese ASR on an Intel N150 mini PC: ReazonSpeech family vs. Parakeet-ja, with noise
 
 **日本語要約:** Intel N150(4コア、RAM 7.7 GB、GPUなし)の小型ミニPCで、日本語ASRの精度(CER)と速度(RTF)を、静かな条件・ピンクノイズ・会話ノイズ(他人の話し声)で比べた記録です。
@@ -104,6 +106,8 @@ Container peak memory (cgroup, includes page cache): Parakeet F16 ≈ 2.5 GB, Q5
 * GGUF conversions are community builds: [`sakasegawa/reazonspeech-nemo-v2-GGUF`](https://huggingface.co/sakasegawa/reazonspeech-nemo-v2-GGUF), [`sakasegawa/parakeet-tdt_ctc-0.6b-ja-GGUF`](https://huggingface.co/sakasegawa/parakeet-tdt_ctc-0.6b-ja-GGUF).
 
 ## Interactive view
+
+**Live: https://1404423.github.io/asr-ja-bench-n150/**
 
 `docs/index.html` is a single static page (Chart.js from a CDN, data embedded): pick models and conditions, compare accuracy vs noise, speed vs accuracy, and preprocessing. Open it locally (`python3 -m http.server -d docs`) or serve `docs/` with GitHub Pages. Rebuild with `python3 tools/build_page.py` after editing the CSVs.
 
