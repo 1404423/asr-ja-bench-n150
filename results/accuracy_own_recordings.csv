@@ -107,3 +107,14 @@ parakeet-tdt_ctc-0.6b-ja F16 (speech.cpp),babble5,17.2
 parakeet-tdt_ctc-0.6b-ja Q5_K (speech.cpp),clean+gain,2.3
 parakeet-tdt_ctc-0.6b-ja Q5_K (speech.cpp),pink5,4.4
 parakeet-tdt_ctc-0.6b-ja Q5_K (speech.cpp),babble5,15.6
+parakeet-tdt_ctc-0.6b-ja Q5_K (speech.cpp),as_recorded,2.3
+parakeet-tdt_ctc-0.6b-ja Q5_K (speech.cpp),pink10,4.4
+parakeet-tdt_ctc-0.6b-ja Q5_K (speech.cpp),pink0,10.3
+parakeet-tdt_ctc-0.6b-ja Q5_K (speech.cpp),babble10,4.6
+parakeet-tdt_ctc-0.6b-ja Q5_K (speech.cpp),babble0,71.3
+parakeet-tdt_ctc-0.6b-ja Q5_K (speech.cpp),pink10+gain,4.4
+parakeet-tdt_ctc-0.6b-ja Q5_K (speech.cpp),pink5+gain,4.4
+parakeet-tdt_ctc-0.6b-ja Q5_K (speech.cpp),pink0+gain,9.0
+parakeet-tdt_ctc-0.6b-ja Q5_K (speech.cpp),babble10+gain,4.6
+parakeet-tdt_ctc-0.6b-ja Q5_K (speech.cpp),babble5+gain,16.9
+parakeet-tdt_ctc-0.6b-ja Q5_K (speech.cpp),babble0+gain,73.6

@@ -45,7 +45,7 @@ One unexplained reboot of the box happened during a long run without any thermal
 | reazonspeech-nemo-v2 Q8_0 (speech.cpp) | 3.8 | – | 8.4 | – | – | 25.8 | – |
 | parakeet-tdt_ctc-0.6b-ja Q8_0 (speech.cpp) | 3.1 | 3.6 | 6.9 | 8.9 | 7.2 | 17.1 | 40.7 |
 | parakeet-tdt_ctc-0.6b-ja F16 (speech.cpp) | – | – | 6.7 | – | – | – | – |
-| parakeet-tdt_ctc-0.6b-ja Q5_K (speech.cpp) | – | – | 6.4 | – | – | – | – |
+| parakeet-tdt_ctc-0.6b-ja Q5_K (speech.cpp) | 3.1 | 4.1 | 6.4 | 9.2 | 8.7 | 14.9 | 41.1 |
 
 ### Own recordings (15 clips, two speakers)
 
@@ -60,9 +60,9 @@ One unexplained reboot of the box happened during a long run without any thermal
 | reazonspeech-nemo-v2 Q8_0 (speech.cpp) | – | 11.3 | – | 16.9 | – | 18.7 | 42.3 | – |
 | parakeet-tdt_ctc-0.6b-ja Q8_0 (speech.cpp) | 2.3 | 2.3 | 4.4 | 5.4 | 9.0 | 4.6 | 16.4 | 72.3 |
 | parakeet-tdt_ctc-0.6b-ja F16 (speech.cpp) | – | 2.3 | – | 4.4 | – | – | 17.2 | – |
-| parakeet-tdt_ctc-0.6b-ja Q5_K (speech.cpp) | – | 2.3 | – | 4.4 | – | – | 15.6 | – |
+| parakeet-tdt_ctc-0.6b-ja Q5_K (speech.cpp) | 2.3 | 2.3 | 4.4 | 4.4 | 10.3 | 4.6 | 15.6 | 71.3 |
 
-`as_recorded` is the raw level; the Hugging Face CTC models give identical numbers there and with gain (presumably because their processor normalises the waveform). Dashes were not measured. The Parakeet F16 and Q5_K builds were only run on four conditions (CV pink 5 dB; own clean+gain, pink 5 dB, babble 5 dB).
+`as_recorded` is the raw level; the Hugging Face CTC models give identical numbers there and with gain (presumably because their processor normalises the waveform). Dashes were not measured. Parakeet F16 was only run on four conditions (CV pink 5 dB; own clean+gain, pink 5 dB, babble 5 dB). The `+gain` columns (auto-gain applied before recognition) are in `results/accuracy_own_recordings.csv`: for Parakeet the gain makes no consistent difference (e.g. pink 5 dB 4.4 vs 4.4, babble 5 dB 15.6 vs 16.9 for Q5_K).
 
 ## Results: speed (RTF, controlled runs only)
 
@@ -82,14 +82,14 @@ One unexplained reboot of the box happened during a long run without any thermal
 | Parakeet-ja Q5_K (speech.cpp) | 2 | 6.4 / 0.26 | 2.3 / 0.21 |
 | Parakeet-ja F16 (speech.cpp) | 2 | 6.7 / 1.0 | 2.3 / 0.97 |
 
-Container peak memory (cgroup, includes page cache): Parakeet F16 ≈ 2.5 GB. The model authors report 0.77 GB (Q8_0) / 1.35 GB (F16) peak on Apple silicon; the numbers are not directly comparable.
+Container peak memory (cgroup, includes page cache): Parakeet F16 ≈ 2.5 GB, Q5_K ≈ 0.53 GB. The model authors report 0.77 GB (Q8_0) / 1.35 GB (F16) peak on Apple silicon; the numbers are not directly comparable.
 
 ## Findings
 
 1. **More threads made k2-v2 slower** on this CPU (fp32: RTF 0.27 at 1 thread vs 1.34 at 4; accuracy identical). The speech.cpp GGUF models behave the opposite way (1 → 2 threads ≈ 2× faster).
 2. **fp32 vs int8 k2-v2:** same or better CER in nearly every condition, the gap grows with noise; and at 1 thread it is also faster than int8 at 3 threads.
 3. **Parakeet-tdt_ctc-0.6b-ja (speech.cpp) was the most accurate model in most conditions.** On the two-speaker recordings it is best in every condition measured (e.g. babble 10 dB: 4.6 % vs 15.6 % for k2-v2 fp32; clean+gain 2.3 % vs 5.1 %). On Common Voice it wins clean (3.1 vs 4.8 %) and pink noise (pink 5 dB 6.9 vs 6.6 is a tie; 10 dB 3.6 vs 5.3; 0 dB 8.9 vs 10.5), ties at babble 10/5 dB, and loses at babble 0 dB (40.7 vs 36.5 %).
-4. **Quantisation barely matters for Parakeet, but speed does:** F16 is not more accurate than Q8_0 (differences ±1 point on 15 clips) and ~3× slower (RTF ≈ 1.0 with 2 threads). **Q5_K matched or beat Q8_0 and was the fastest** (RTF 0.21–0.26 with 2 threads).
+4. **Quantisation barely matters for Parakeet, but speed does** (the Q5_K build was chosen for deployment): F16 is not more accurate than Q8_0 (differences ±1 point on 15 clips) and ~3× slower (RTF ≈ 1.0 with 2 threads). **Q5_K matched Q8_0 within noise over all 7 CV and 8 recording conditions (e.g. CV babble 5 dB 14.9 vs 17.1, pink 0 dB 9.2 vs 8.9) and was the fastest** (RTF 0.21–0.26 with 2 threads, 0.53 GB peak memory).
 5. **ReazonSpeech NeMo v2** is good on clean CV (3.8 %) but clearly worse with noise and on the recordings.
 6. The Oct-2025 `reazon-research/japanese-{zipformer,hubert}-base-k2-rs35kh*` CTC checkpoints did not beat k2-v2 here, especially with noise.
 7. **Preprocessing does not help** (`results/preprocessing_gtcrn.csv`): the GTCRN denoiser made most noisy conditions worse (e.g. own pink 5 dB 9.5 → 17.2 %), mixing 50 % of the original back reduced the damage but did not give a reliable gain; an 80 Hz high-pass gave no gain on CV and a worse number on the recordings (5.1 → 7.2 %).
