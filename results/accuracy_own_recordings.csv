@@ -118,3 +118,17 @@ parakeet-tdt_ctc-0.6b-ja Q5_K (speech.cpp),pink0+gain,9.0
 parakeet-tdt_ctc-0.6b-ja Q5_K (speech.cpp),babble10+gain,4.6
 parakeet-tdt_ctc-0.6b-ja Q5_K (speech.cpp),babble5+gain,16.9
 parakeet-tdt_ctc-0.6b-ja Q5_K (speech.cpp),babble0+gain,73.6
+Haas-ja-v1.0 Q5_K (speech.cpp),babble0,55.4
+Haas-ja-v1.0 Q5_K (speech.cpp),babble0+gain,54.4
+Haas-ja-v1.0 Q5_K (speech.cpp),babble10,4.4
+Haas-ja-v1.0 Q5_K (speech.cpp),babble10+gain,4.9
+Haas-ja-v1.0 Q5_K (speech.cpp),babble5,7.7
+Haas-ja-v1.0 Q5_K (speech.cpp),babble5+gain,9.5
+Haas-ja-v1.0 Q5_K (speech.cpp),as_recorded,1.3
+Haas-ja-v1.0 Q5_K (speech.cpp),clean+gain,1.3
+Haas-ja-v1.0 Q5_K (speech.cpp),pink0,6.9
+Haas-ja-v1.0 Q5_K (speech.cpp),pink0+gain,6.9
+Haas-ja-v1.0 Q5_K (speech.cpp),pink10,2.1
+Haas-ja-v1.0 Q5_K (speech.cpp),pink10+gain,2.6
+Haas-ja-v1.0 Q5_K (speech.cpp),pink5,2.3
+Haas-ja-v1.0 Q5_K (speech.cpp),pink5+gain,2.3

@@ -67,3 +67,24 @@ parakeet-tdt_ctc-0.6b-ja F16 (speech.cpp),threads=2,,cpus=2,own_clean+gain,2.3,0
 parakeet-tdt_ctc-0.6b-ja F16 (speech.cpp),threads=2,,cpus=2,own_pink5,4.4,0.97
 parakeet-tdt_ctc-0.6b-ja F16 (speech.cpp),threads=2,,cpus=2,own_babble5,17.2,0.96
 parakeet-tdt_ctc-0.6b-ja F16 (speech.cpp),threads=2,,cpus=2,pink5,6.7,1.0
+Haas-ja-v1.0 Q5_K (speech.cpp) [Common Voice in its training data],threads=2,,cpus=2,babble0,34.4,0.27
+Haas-ja-v1.0 Q5_K (speech.cpp) [Common Voice in its training data],threads=2,,cpus=2,babble10,3.9,0.27
+Haas-ja-v1.0 Q5_K (speech.cpp) [Common Voice in its training data],threads=2,,cpus=2,babble5,13.3,0.27
+Haas-ja-v1.0 Q5_K (speech.cpp) [Common Voice in its training data],threads=2,,cpus=2,clean,0.1,0.27
+Haas-ja-v1.0 Q5_K (speech.cpp) [Common Voice in its training data],threads=2,,cpus=2,pink0,8.0,0.27
+Haas-ja-v1.0 Q5_K (speech.cpp) [Common Voice in its training data],threads=2,,cpus=2,pink10,2.4,0.27
+Haas-ja-v1.0 Q5_K (speech.cpp) [Common Voice in its training data],threads=2,,cpus=2,pink5,4.0,0.27
+Haas-ja-v1.0 Q5_K (speech.cpp),threads=2,,cpus=2,own_babble0,55.4,0.21
+Haas-ja-v1.0 Q5_K (speech.cpp),threads=2,,cpus=2,own_babble0+gain,54.4,0.21
+Haas-ja-v1.0 Q5_K (speech.cpp),threads=2,,cpus=2,own_babble10,4.4,0.21
+Haas-ja-v1.0 Q5_K (speech.cpp),threads=2,,cpus=2,own_babble10+gain,4.9,0.21
+Haas-ja-v1.0 Q5_K (speech.cpp),threads=2,,cpus=2,own_babble5,7.7,0.21
+Haas-ja-v1.0 Q5_K (speech.cpp),threads=2,,cpus=2,own_babble5+gain,9.5,0.21
+Haas-ja-v1.0 Q5_K (speech.cpp),threads=2,,cpus=2,own_as_recorded,1.3,0.21
+Haas-ja-v1.0 Q5_K (speech.cpp),threads=2,,cpus=2,own_clean+gain,1.3,0.21
+Haas-ja-v1.0 Q5_K (speech.cpp),threads=2,,cpus=2,own_pink0,6.9,0.21
+Haas-ja-v1.0 Q5_K (speech.cpp),threads=2,,cpus=2,own_pink0+gain,6.9,0.21
+Haas-ja-v1.0 Q5_K (speech.cpp),threads=2,,cpus=2,own_pink10,2.1,0.21
+Haas-ja-v1.0 Q5_K (speech.cpp),threads=2,,cpus=2,own_pink10+gain,2.6,0.21
+Haas-ja-v1.0 Q5_K (speech.cpp),threads=2,,cpus=2,own_pink5,2.3,0.21
+Haas-ja-v1.0 Q5_K (speech.cpp),threads=2,,cpus=2,own_pink5+gain,2.3,0.21

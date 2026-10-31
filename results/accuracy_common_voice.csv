@@ -59,3 +59,10 @@ parakeet-tdt_ctc-0.6b-ja Q5_K (speech.cpp),pink0,9.2
 parakeet-tdt_ctc-0.6b-ja Q5_K (speech.cpp),babble10,8.7
 parakeet-tdt_ctc-0.6b-ja Q5_K (speech.cpp),babble5,14.9
 parakeet-tdt_ctc-0.6b-ja Q5_K (speech.cpp),babble0,41.1
+Haas-ja-v1.0 Q5_K (speech.cpp) [Common Voice in its training data],babble0,34.4
+Haas-ja-v1.0 Q5_K (speech.cpp) [Common Voice in its training data],babble10,3.9
+Haas-ja-v1.0 Q5_K (speech.cpp) [Common Voice in its training data],babble5,13.3
+Haas-ja-v1.0 Q5_K (speech.cpp) [Common Voice in its training data],clean,0.1
+Haas-ja-v1.0 Q5_K (speech.cpp) [Common Voice in its training data],pink0,8.0
+Haas-ja-v1.0 Q5_K (speech.cpp) [Common Voice in its training data],pink10,2.4
+Haas-ja-v1.0 Q5_K (speech.cpp) [Common Voice in its training data],pink5,4.0
