@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Japanese ASR on N150</title>
+<title>Japanese ASR on N150: Parakeet, Haas</title>
 <style>
 :root{--bg:#fafaf8;--panel:#fff;--text:#1d2125;--muted:#5d6670;--line:#dcdfe3;--accent:#0b5cad}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15181b;--panel:#1d2126;--text:#e6e8ea;--muted:#9aa4ad;--line:#333a41;--accent:#6aa9ee}}
@@ -36,7 +36,7 @@ a{color:var(--accent)}
 </head>
 <body>
 <main>
-<h1>Japanese ASR on Intel N150 / 日本語ASR比較</h1>
+<h1>Japanese ASR on Intel N150: ReazonSpeech, Parakeet-ja, Haas-ja / 日本語ASR比較</h1>
 <p class="lead">CER(誤り率、低いほど良い)と RTF(処理時間÷音声長、低いほど速い)。見たいモデルと条件だけ選べます。 Lower is better for both.</p>
 
 <div class="tabs" role="tablist">
@@ -109,11 +109,13 @@ const SHAPES={"k2-v2 int8":"triangle","k2-v2 fp32":"circle","Parakeet-ja Q8_0":"
 
 const $ = (s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
 function css(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim()}
+// variants of a model already shown and the older checkpoints: start unchecked (still selectable)
+const OFF=new Set(["k2-v2 int8","Parakeet-ja Q8_0","Parakeet-ja F16","Zipformer rs35kh","Zipformer rs35kh-bpe","HuBERT rs35kh","HuBERT rs35kh-bpe"]);
 let store={}; try{store=JSON.parse(localStorage.getItem("asr-ui")||"{}")}catch(e){}
 function save(){try{localStorage.setItem("asr-ui",JSON.stringify(store))}catch(e){}}
 
 function modelBoxes(el,names,key,onchange){
-  const sel=new Set(store[key]||names);
+  const sel=new Set(store[key]||names.filter(n=>!OFF.has(n)));
   el.innerHTML=names.map(n=>`<label><input type="checkbox" value="${n}" ${sel.has(n)?"checked":""}><span class="sw" style="background:${COLORS[n]}"></span>${n}</label>`).join("");
   $$("input",el).forEach(i=>i.onchange=()=>{store[key]=$$("input:checked",el).map(x=>x.value);save();onchange()});
 }

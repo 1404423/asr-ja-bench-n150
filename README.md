@@ -1,6 +1,6 @@
 [Interactive charts / グラフで見る](https://1404423.github.io/asr-ja-bench-n150/)
 
-# Japanese ASR on an Intel N150 mini PC: ReazonSpeech family vs. Parakeet-ja, with noise
+# Japanese ASR on an Intel N150 mini PC: ReazonSpeech family vs. Parakeet-ja vs. Haas-ja, with noise
 
 **日本語要約:** Intel N150(4コア、RAM 7.7 GB、GPUなし)の小型ミニPCで、日本語ASRの精度(CER)と速度(RTF)を、静かな条件・ピンクノイズ・会話ノイズ(他人の話し声)で比べた記録です。
 公開サンプル(Common Voice 40件)と、日本語話者2人の読み上げ録音15件(録音自体は非公開)を使いました。
