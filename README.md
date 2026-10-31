@@ -4,7 +4,7 @@
 
 **日本語要約:** Intel N150(4コア、RAM 7.7 GB、GPUなし)の小型ミニPCで、日本語ASRの精度(CER)と速度(RTF)を、静かな条件・ピンクノイズ・会話ノイズ(他人の話し声)で比べた記録です。
 公開サンプル(Common Voice 40件)と、日本語話者2人の読み上げ録音15件(録音自体は非公開)を使いました。
-結論: ほとんどの条件で `parakeet-tdt_ctc-0.6b-ja`(speech.cpp、量子化 Q5_K か Q8_0、2スレッド)が最も正確で、2人の録音では全条件で最良(誤りが約1/3〜1/2)でした。速度は RTF 0.2〜0.4 です。F16 は精度が上がらず約3倍遅いので不要です。`reazonspeech-k2-v2`(sherpa-onnx、fp32、**1スレッド**)は最も軽く、公開サンプルの強いノイズ(会話 0 dB)では Parakeet より良い結果でした。
+結論: `parakeet-tdt_ctc-0.6b-ja`(speech.cpp、量子化 Q5_K か Q8_0、2スレッド)は、k2-v2・NeMo・Oct-2025 CTC 系より、ほとんどの条件で正確でした。2人の録音では k2-v2 fp32 に全条件で勝ち(誤りが約1/3〜1/2)ます。ただし、2026-10-30 公開の `Haas-ja-v1.0`(Q5_K)とは、自分の録音で優劣がつきません(静かな条件と弱いピンクノイズで Haas、強いピンクノイズと会話ノイズで Parakeet)。速度は RTF 0.2〜0.4 です。F16 は精度が上がらず約3倍遅いので不要です。`reazonspeech-k2-v2`(sherpa-onnx、fp32、**1スレッド**)は最も軽く、公開サンプルの強いノイズ(会話 0 dB)では Parakeet より良い結果でした。
 追記(2026-10-31): 新しく出た `Haas-ja-v1.0`(Q5_K)を Parakeet Q5_K と同じ条件・同じ音源で比べました。自分の録音では、静かな条件と弱いピンクノイズで Haas が少し良く、強いピンクノイズと会話ノイズで Parakeet が少し良く、速度は同じです。15件では優劣はつきません。Haas は Common Voice を学習に使っているため、Common Voice の数字は比較に使えません。
 ただし録音は15件と少なく、結果は参考値です。ノイズ抑制(GTCRN)とハイパスは、効果がないか逆効果でした。
 
@@ -118,7 +118,7 @@ Reading: Haas is a little better on clean speech and weak pink noise; Parakeet i
 
 1. **More threads made k2-v2 slower** on this CPU (fp32: RTF 0.27 at 1 thread vs 1.34 at 4; accuracy identical). The speech.cpp GGUF models behave the opposite way (1 → 2 threads ≈ 2× faster).
 2. **fp32 vs int8 k2-v2:** same or better CER in nearly every condition, the gap grows with noise; and at 1 thread it is also faster than int8 at 3 threads.
-3. **Parakeet-tdt_ctc-0.6b-ja (speech.cpp) was the most accurate model in most conditions.** On the two-speaker recordings it is best in every condition measured (e.g. babble 10 dB: 4.6 % vs 15.6 % for k2-v2 fp32; clean+gain 2.3 % vs 5.1 %). On Common Voice it wins clean (3.1 vs 4.8 %) and pink noise (pink 5 dB 6.9 vs 6.6 is a tie; 10 dB 3.6 vs 5.3; 0 dB 8.9 vs 10.5), ties at babble 10/5 dB, and loses at babble 0 dB (40.7 vs 36.5 %).
+3. **Parakeet-tdt_ctc-0.6b-ja (speech.cpp) was the most accurate of the models measured before Haas-ja, in most conditions; against Haas-ja-v1.0 there is no overall winner** (section "Haas-ja-v1.0 vs Parakeet Q5_K"). On the two-speaker recordings it beat every model other than Haas in every condition measured (e.g. babble 10 dB: 4.6 % vs 15.6 % for k2-v2 fp32; clean+gain 2.3 % vs 5.1 %). On Common Voice it wins clean (3.1 vs 4.8 %) and pink noise (pink 5 dB 6.9 vs 6.6 is a tie; 10 dB 3.6 vs 5.3; 0 dB 8.9 vs 10.5), ties at babble 10/5 dB, and loses at babble 0 dB (40.7 vs 36.5 %).
 4. **Quantisation barely matters for Parakeet, but speed does** (the Q5_K build was chosen for deployment): F16 is not more accurate than Q8_0 (differences ±1 point on 15 clips) and ~3× slower (RTF ≈ 1.0 with 2 threads). **Q5_K matched Q8_0 within noise over all 7 CV and 8 recording conditions (e.g. CV babble 5 dB 14.9 vs 17.1, pink 0 dB 9.2 vs 8.9) and was the fastest** (RTF 0.21–0.26 with 2 threads, 0.53 GB peak memory).
 5. **ReazonSpeech NeMo v2** is good on clean CV (3.8 %) but clearly worse with noise and on the recordings.
 6. The Oct-2025 `reazon-research/japanese-{zipformer,hubert}-base-k2-rs35kh*` CTC checkpoints did not beat k2-v2 here, especially with noise.
@@ -127,7 +127,7 @@ Reading: Haas is a little better on clean speech and weak pink noise; Parakeet i
 ## Caveats (please read)
 
 * **Training-data overlap.** Haas-ja-v1.0 was trained on Common Voice 26.0 (ReazonSpeech, YODAS and internal data too), so the Common Voice rows for Haas are marked † and should not be read as accuracy. Parakeet was trained on ReazonSpeech only; NeMo-v2 and the k2 models are ReazonSpeech models as well. I do not know whether any of the 15 own recordings' sentences appear in any training set.
-* **Small samples.** 15 recordings: one wrong sentence moves CER by several points. The Parakeet advantage is consistent across all conditions on the recordings and on most Common Voice conditions but still needs a larger, independent check.
+* **Small samples.** 15 recordings: one wrong sentence moves CER by several points. The Parakeet advantage over k2-v2 and NeMo is consistent across all conditions on the recordings and on most Common Voice conditions, and Haas-ja against Parakeet is a draw on the recordings; both statements still need a larger, independent check.
 * The reference sentences of the own recordings were reconstructed, not taken from a saved script.
 * Noise is synthetic; real far-field/reverberant speech was not tested.
 * Mixed runtimes (sherpa-onnx vs speech.cpp vs PyTorch) and quantisations (int8, fp32, Q8_0) — these are model *and* runtime comparisons.
