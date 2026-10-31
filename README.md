@@ -5,7 +5,7 @@
 **日本語要約:** Intel N150(4コア、RAM 7.7 GB、GPUなし)の小型ミニPCで、日本語ASRの精度(CER)と速度(RTF)を、静かな条件・ピンクノイズ・会話ノイズ(他人の話し声)で比べた記録です。
 公開サンプル(Common Voice 40件)と、日本語話者2人の読み上げ録音15件(録音自体は非公開)を使いました。
 結論: `parakeet-tdt_ctc-0.6b-ja`(speech.cpp、量子化 Q5_K か Q8_0、2スレッド)は、k2-v2・NeMo・Oct-2025 CTC 系より、ほとんどの条件で正確でした。2人の録音では k2-v2 fp32 に全条件で勝ち(誤りが約1/3〜1/2)ます。ただし、2026-10-30 公開の `Haas-ja-v1.0`(Q5_K)とは、自分の録音で優劣がつきません(静かな条件と弱いピンクノイズで Haas、強いピンクノイズと会話ノイズで Parakeet)。速度は RTF 0.2〜0.4 です。F16 は精度が上がらず約3倍遅いので不要です。`reazonspeech-k2-v2`(sherpa-onnx、fp32、**1スレッド**)は最も軽く、公開サンプルの強いノイズ(会話 0 dB)では Parakeet より良い結果でした。
-追記(2026-10-31): 新しく出た `Haas-ja-v1.0`(Q5_K)を Parakeet Q5_K と同じ条件・同じ音源で比べました。自分の録音では、静かな条件と弱いピンクノイズで Haas が少し良く、強いピンクノイズと会話ノイズで Parakeet が少し良く、速度は同じです。15件では優劣はつきません。Haas は Common Voice を学習に使っているため、Common Voice の数字は比較に使えません。
+追記(2026-10-31): 新しく出た `Haas-ja-v1.0`(Q5_K)を Parakeet Q5_K と同じ条件・同じ音源で比べました。自分の録音では、静かな条件と弱いピンクノイズで Haas が良く、強いピンクノイズと会話ノイズで Parakeet が少し良く、速度は同じです(RTF 約0.2、実時間の約5倍)。全体の優劣はつきませんが、静かな部屋や近くで話す使い方では Haas を勧めます。Haas は Common Voice を学習に使っているため、Common Voice の数字は比較に使えません。
 ただし録音は15件と少なく、結果は参考値です。ノイズ抑制(GTCRN)とハイパスは、効果がないか逆効果でした。
 
 Small, honest, reproducible-as-far-as-possible numbers for people who want to run Japanese speech recognition on cheap CPU-only home-server hardware.
@@ -112,7 +112,7 @@ Own recordings (15 clips, CER %, no gain / with auto-gain):
 
 Speed (RTF, start-up 6 s subtracted, 2 threads, 2 CPUs): Common Voice 0.26 vs 0.27, own recordings 0.20 vs 0.21 (Parakeet vs Haas), i.e. the same. Common Voice cannot be used for this comparison (Haas saw it in training).
 
-Reading: Haas is a little better on clean speech and weak pink noise; Parakeet is a little better with strong pink noise and with speech-like background (babble 5–10 dB, especially after auto-gain). With 15 clips one point is about 4 characters, so **no clear winner** on this data; neither the accuracy nor the speed gives a reason to switch.
+Reading: Haas is better on clean speech and weak pink noise (clean 1.3 vs 2.3 %, pink 10/5 dB 2.1/2.3 vs 3.3/3.3 %); Parakeet is a little better with strong pink noise and with speech-like background (babble 5–10 dB, especially after auto-gain). Count of the seven no-gain conditions: Haas 3, Parakeet 3, tie 1. With 15 clips one point is about 4 characters, so there is **no overall winner**, but the split is useful: **for quiet or near-field use (a room with a noise-suppressing microphone) Haas is the better pick; with strong or speech-like background noise Parakeet holds up slightly better.** Haas's own FLEURS numbers point the same way (4.39 % vs 5.00 % for Q8_0; both are the model authors' figures). Both run at an RTF of about 0.2 with 2 threads on 2 cores, i.e. about 5 times faster than real time on this CPU-only box, with about the same memory (Q5_K files of 0.43 GB).
 
 ## Findings
 
